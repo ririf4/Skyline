@@ -49,9 +49,11 @@ class Skyline : ClientModInitializer, ModMenuApi {
 		)
 		KeyBindingManager.register()
 		ConfigManager.load()
+		registerEvents()
 	}
 
 	private fun registerEvents() {
+		ClientLifecycleEvents.CLIENT_STARTED.register { ChunkSSBO.create() }
 		ClientLifecycleEvents.CLIENT_STOPPING.register { ChunkSSBO.delete() }
 	}
 

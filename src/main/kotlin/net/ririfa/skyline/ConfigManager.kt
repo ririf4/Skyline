@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import me.shedaniel.clothconfig2.api.ConfigBuilder
 import me.shedaniel.clothconfig2.api.ConfigCategory
-import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
 import net.ririfa.skyline.translation.SkylineMessageKey
@@ -17,33 +16,34 @@ object ConfigManager {
 	private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
 	fun createConfigScreen(parent: Screen): Screen {
+		load()
 		val builder = ConfigBuilder.create().setParentScreen(parent).setTitle(provider.getMessage(SkylineMessageKey.Config.Title))
 		val entryBuilder = builder.entryBuilder()
 		val category: ConfigCategory = builder.getOrCreateCategory(provider.getMessage(SkylineMessageKey.Config.Category.General))
 
 		category.addEntry(entryBuilder.startIntField(provider.getMessage(SkylineMessageKey.Config.Settings.RenderDistance.Name), config.renderDistance)
-			.setDefaultValue(64)
+			.setDefaultValue(config.renderDistance)
 			.setSaveConsumer { config = config.copy(renderDistance = it) }
 			.setTooltip(provider.getMessage(SkylineMessageKey.Config.Settings.RenderDistance.Tooltip))
 			.build()
 		)
 
 		category.addEntry(entryBuilder.startDoubleField(provider.getMessage(SkylineMessageKey.Config.Settings.CacheMaxDistance.Name), config.ssboChunkMultiplier)
-			.setDefaultValue(2.0)
+			.setDefaultValue(config.ssboChunkMultiplier)
 			.setSaveConsumer { config = config.copy(ssboChunkMultiplier = it) }
 			.setTooltip(provider.getMessage(SkylineMessageKey.Config.Settings.CacheMaxDistance.Tooltip))
 			.build()
 		)
 
 		category.addEntry(entryBuilder.startBooleanToggle(provider.getMessage(SkylineMessageKey.Config.Settings.UseLOD.Name), config.useLOD)
-			.setDefaultValue(true)
+			.setDefaultValue(config.useLOD)
 			.setSaveConsumer { config = config.copy(useLOD = it) }
 			.setTooltip(provider.getMessage(SkylineMessageKey.Config.Settings.UseLOD.Tooltip))
 			.build()
 		)
 
 		category.addEntry(entryBuilder.startIntField(provider.getMessage(SkylineMessageKey.Config.Settings.LODThreshold.Name), config.lodThreshold)
-			.setDefaultValue(128)
+			.setDefaultValue(config.lodThreshold)
 			.setSaveConsumer { config = config.copy(lodThreshold = it) }
 			.setTooltip(provider.getMessage(SkylineMessageKey.Config.Settings.LODThreshold.Tooltip))
 			.build()
@@ -63,7 +63,7 @@ object ConfigManager {
 		)
 
 		category.addEntry(entryBuilder.startIntField(provider.getMessage(SkylineMessageKey.Config.Settings.MaxChunks.Name), config.maxChunks)
-			.setDefaultValue(1024)
+			.setDefaultValue(config.maxChunks)
 			.setSaveConsumer { config = config.copy(maxChunks = it) }
 			.setTooltip(provider.getMessage(SkylineMessageKey.Config.Settings.MaxChunks.Tooltip))
 			.build()
