@@ -1,0 +1,22 @@
+Config:
+  OpenConfig: "設定を開く"
+  CategoryInSettings: "Skyline"
+
+  Title: "Skyline 設定"
+
+  Category:
+    General: "一般"
+
+  Settings:
+    RenderDistance:
+      Name: "描画距離"
+      Tooltip: "チャンクをどの程度の距離までキャッシュし、描画するかを設定します。"
+    CacheMaxDistance:
+        Name: "キャッシュ最大距離"
+        Tooltip: "RenderDistanceの何倍の距離までキャッシュを保持するかを設定します。"
+    UseLOD:
+      Name: "LODを使用する"
+      Tooltip: "遠距離のキャッシュチャンクを低解像度で描画することで、パフォーマンスを向上させます。"
+    LODThreshold:
+      Name: "LODの閾値"
+      Tooltip: "LODを適用する距離しきい値を設定します。"

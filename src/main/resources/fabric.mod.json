@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "skyline",
+  "version": "${version}",
+  "name": "Skyline",
+  "description": "${description}",
+  "contributors": [
+    "RiriFa"
+  ],
+  "contact": {
+    "sources": "https://github.com/ririf4/Skyline"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/skyline/icon-320.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "net.ririfa.skyline.Skyline"
+      }
+    ],
+    "modmenu": [
+        {
+            "adapter": "kotlin",
+            "value": "net.ririfa.skyline.Skyline"
+        }
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "~1.21",
+    "java": ">=21",
+    "fabric-api": "*",
+    "fabric-language-kotlin": ">=1.13.1+kotlin.2.1.10"
+  },
+  "mixins": [
+    "skyline.mixins.json"
+  ],
+  "accessWidener": "skyline.accesswidener"
+}
