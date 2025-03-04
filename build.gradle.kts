@@ -16,6 +16,7 @@ repositories {
 	maven("https://maven.terraformersmc.com/releases/")
 	maven("https://maven.terraformersmc.com/")
 	maven("https://maven.shedaniel.me/")
+	maven("https://api.modrinth.com/maven")
 }
 
 dependencies{
@@ -25,6 +26,7 @@ dependencies{
 	modImplementation(libs.fabric.api)
 	modImplementation(libs.fabric.kotlin)
 	modImplementation(libs.modmenu)
+	modImplementation(libs.sodium)
 	modApi(libs.cloth)
 	modApi(libs.langman)
 	modApi(libs.gson)

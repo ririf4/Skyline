@@ -1,4 +1,4 @@
-package net.ririfa.skyline
+package net.ririfa.skyline.config
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -6,6 +6,8 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder
 import me.shedaniel.clothconfig2.api.ConfigCategory
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
+import net.ririfa.skyline.SL
+import net.ririfa.skyline.provider
 import net.ririfa.skyline.translation.SkylineMessageKey
 import java.nio.file.Files
 import java.nio.file.Path
@@ -28,13 +30,6 @@ object ConfigManager {
 			.build()
 		)
 
-		category.addEntry(entryBuilder.startDoubleField(provider.getMessage(SkylineMessageKey.Config.Settings.CacheMaxDistance.Name), config.ssboChunkMultiplier)
-			.setDefaultValue(config.ssboChunkMultiplier)
-			.setSaveConsumer { config = config.copy(ssboChunkMultiplier = it) }
-			.setTooltip(provider.getMessage(SkylineMessageKey.Config.Settings.CacheMaxDistance.Tooltip))
-			.build()
-		)
-
 		category.addEntry(entryBuilder.startBooleanToggle(provider.getMessage(SkylineMessageKey.Config.Settings.UseLOD.Name), config.useLOD)
 			.setDefaultValue(config.useLOD)
 			.setSaveConsumer { config = config.copy(useLOD = it) }
@@ -45,7 +40,14 @@ object ConfigManager {
 		category.addEntry(entryBuilder.startIntField(provider.getMessage(SkylineMessageKey.Config.Settings.LODThreshold.Name), config.lodThreshold)
 			.setDefaultValue(config.lodThreshold)
 			.setSaveConsumer { config = config.copy(lodThreshold = it) }
-			.setTooltip(provider.getMessage(SkylineMessageKey.Config.Settings.LODThreshold.Tooltip))
+			.setTooltip(
+				provider.getMessage(
+					SkylineMessageKey.Config.Settings.LODThreshold.Tooltip,
+					provider.getMessage(
+						SkylineMessageKey.Config.Settings.RenderDistance.Name
+					).string
+				)
+			)
 			.build()
 		)
 
@@ -53,9 +55,9 @@ object ConfigManager {
 			entryBuilder.startEnumSelector(
 				provider.getMessage(SkylineMessageKey.Config.Settings.ChunkSizeXZ.Name),
 				ChunkSize::class.java,
-				ChunkSize.MEDIUM
+				ChunkSize.of(config.chunkSizeX, config.chunkSizeZ)
 			)
-				.setDefaultValue(ChunkSize.MEDIUM)
+				.setDefaultValue(ChunkSize.of(config.chunkSizeX, config.chunkSizeZ))
 				.setEnumNameProvider { (it as ChunkSize).displayName }
 				.setSaveConsumer { config = config.copy(chunkSizeX = it.size[0], chunkSizeZ = it.size[1]) }
 				.setTooltip(provider.getMessage(SkylineMessageKey.Config.Settings.ChunkSizeXZ.Tooltip))
@@ -116,16 +118,19 @@ object ConfigManager {
 		MEDIUM(intArrayOf(16, 16)),
 		LARGE(intArrayOf(32, 32));
 
-		val displayName: Text
-			get() = Text.of("${size[0]}×256×${size[1]}")
-	}
+		companion object {
+			fun of(x: Int, z: Int): ChunkSize {
+				return entries.firstOrNull { it.size[0] == x && it.size[1] == z } ?: MEDIUM
+			}
+		}
 
+		val displayName: Text
+			get() = Text.of("${size[0]}×256×${size[1]}").copy().styled { it.withBold(true) }
+	}
 
 	data class Config(
 		@JvmField
 		val renderDistance: Int = 64,
-		@JvmField
-		val ssboChunkMultiplier: Double = 2.0,
 		@JvmField
 		val useLOD: Boolean = true,
 		@JvmField

@@ -1,22 +1,28 @@
 Config:
-  OpenConfig: "設定を開く"
-  CategoryInSettings: "Skyline"
-
-  Title: "Skyline 設定"
+  OpenConfig: '設定を開く'
+  CategoryInSettings: 'Skyline'
+  Title: 'Skyline'
 
   Category:
-    General: "一般"
+    General: '一般'
 
   Settings:
     RenderDistance:
-      Name: "描画距離"
-      Tooltip: "チャンクをどの程度の距離までキャッシュし、描画するかを設定します。"
-    CacheMaxDistance:
-        Name: "キャッシュ最大距離"
-        Tooltip: "RenderDistanceの何倍の距離までキャッシュを保持するかを設定します。"
+      Name: '描画距離'
+      Tooltip: 'Skylineが、Minecraftの描画距離に加えてどの程度の距離まで描画するかを設定します。'
+
     UseLOD:
-      Name: "LODを使用する"
-      Tooltip: "遠距離のキャッシュチャンクを低解像度で描画することで、パフォーマンスを向上させます。"
+      Name: 'LODを使用する'
+      Tooltip: 'Skylineが、追加の描画をする際に、LODを使用してパフォーマンスを向上させるかどうかを設定します。'
+
     LODThreshold:
-      Name: "LODの閾値"
-      Tooltip: "LODを適用する距離しきい値を設定します。"
+      Name: 'LOD適用しきい値'
+      Tooltip: 'LODが適用される距離のしきい値を設定します。この値は、%s の値よりも大きくなければいけません。'
+
+    ChunkSizeXZ:
+      Name: '保存チャンクサイズ'
+      Tooltip: 'Skylineが、データ保存時にワールドをどの程度のサイズに分割して保存するかを設定します。値がおおきいほど、データ保存時の負荷が軽減されます。'
+
+    MaxChunks:
+      Name: '最大保存チャンク数'
+      Tooltip: 'Skylineが、データ保存時に保存する最大チャンク数を設定します。値が大きいほど、使用されるVRAMが増加します。'

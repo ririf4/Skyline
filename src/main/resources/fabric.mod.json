@@ -4,11 +4,14 @@
   "version": "${version}",
   "name": "Skyline",
   "description": "${description}",
-  "contributors": [
+  "authors": [
     "RiriFa"
   ],
   "contact": {
-    "sources": "https://github.com/ririf4/Skyline"
+    "sources": "https://github.com/ririf4/Skyline",
+    "homepage": "https://modrinth.com/mod/skyline",
+    "issues": "https://github.com/ririf4/Skyline/issues",
+    "email": "dev@ririfa.net"
   },
   "license": "GPL-3.0",
   "icon": "assets/skyline/icon-320.png",

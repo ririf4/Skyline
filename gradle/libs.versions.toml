@@ -11,6 +11,7 @@ cloth = "17.0.144"
 langman = "1.4.3"
 gson = "2.12.1"
 modmenu = "13.0.2"
+sodium = "mc1.21.4-0.6.10-fabric"
 
 [libraries]
 minecraft = { group = "com.mojang", name = "minecraft", version.ref = "minecraft" }
@@ -23,6 +24,7 @@ cloth = { group = "me.shedaniel.cloth", name = "cloth-config-fabric", version.re
 langman = { group = "net.ririfa", name = "langman", version.ref = "langman" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 modmenu = { group = "com.terraformersmc", name = "modmenu", version.ref = "modmenu" }
+sodium = { group = "maven.modrinth", name = "sodium", version.ref = "sodium" }
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

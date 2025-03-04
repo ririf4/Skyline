@@ -20,11 +20,6 @@ sealed class SkylineMessageKey : MessageKey<SLMSGProvider, Text> {
 				object Tooltip : RenderDistance()
 			}
 
-			sealed class CacheMaxDistance : Settings() {
-				object Name : CacheMaxDistance()
-				object Tooltip : CacheMaxDistance()
-			}
-
 			sealed class UseLOD : Settings() {
 				object Name : UseLOD()
 				object Tooltip : UseLOD()

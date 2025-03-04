@@ -1,9 +1,11 @@
-package net.ririfa.skyline
+package net.ririfa.skyline.config
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
+import net.ririfa.skyline.client
+import net.ririfa.skyline.provider
 import net.ririfa.skyline.translation.SkylineMessageKey
 import org.lwjgl.glfw.GLFW
 
