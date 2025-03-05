@@ -141,5 +141,9 @@ object ConfigManager {
 		val chunkSizeZ: Int = 16,
 		@JvmField
 		val maxChunks: Int = 1024
-	)
+	) {
+		fun getCellSize(): Int {
+			return chunkSizeX * chunkSizeZ
+		}
+	}
 }
