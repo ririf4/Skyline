@@ -5,8 +5,7 @@ import java.nio.IntBuffer
 import java.nio.*
 
 /**
- * a fixed-size buffer of integer data. This class is used to efficiently handle buffer operations.
- * This class is not thread-safe; external synchronization is required for concurrent usage.
+ * Represents a Shader Storage Buffer Object (SSBO) cell specialized for storing and managing
  * a fixed-size buffer of integer data. This class is used to efficiently handle buffer operations
  * such as adding new data and reading existing data from the buffer within the defined constraints.
  *
@@ -14,7 +13,6 @@ import java.nio.*
  *                   Any attempt to add more data than this limit will result in an exception.
  */
 class SSBOCell(val maxSize: Int) {
-
     init {
         if (maxSize <= 0) {
             throw IllegalArgumentException("Buffer size must be positive!")
@@ -25,6 +23,7 @@ class SSBOCell(val maxSize: Int) {
         .order(ByteOrder.nativeOrder())
         .asIntBuffer()
 
+    @Volatile
     private var currentSizeInternal: Int = 0
 
     val currentSize: Int
@@ -37,13 +36,12 @@ class SSBOCell(val maxSize: Int) {
      *
      * @param newData An array of integers to be added to the buffer. Its size must not
      *                exceed the available space in the buffer.
-     * @throws IllegalArgumentException If the buffer size is invalid or the combined size of
+     * @throws IllegalArgumentException If the combined size of current data in the buffer
      *         and `newData` exceeds the buffer's maximum size.
      */
     @Synchronized
     fun addData(newData: IntArray) {
-
-        if (currentSizeInternal + newData.size > maxSize) {
+        if (currentSize + newData.size > maxSize) {
             throw IllegalArgumentException("Data size exceeds maximum size!")
         }
         buffer.put(newData)
@@ -51,34 +49,23 @@ class SSBOCell(val maxSize: Int) {
     }
 
     /**
-     * Reads the integer data currently stored in the buffer and returns it as an array.
-     * The buffer's position is reset to the start before the data is read to ensure all
-     * stored data is included in the result.
+     * Reads the current data stored in the buffer up to the current size.
+     * The method duplicates the buffer, rewinds it, and retrieves the data
+     * into a new integer array.
      *
-     * @return An array containing the data currently stored in the buffer.
+     * @return An array of integers containing the current data in the buffer.
      */
+    @Synchronized
     fun readData(): IntArray {
-        val result = IntArray(currentSizeInternal)
-        val duplicateBuffer = buffer.duplicate()
-        duplicateBuffer.rewind()
-        duplicateBuffer.get(result)
+        val result = IntArray(currentSize)
+        buffer.duplicate().rewind().get(result)
         return result
+    }
 
-        @Synchronized
-        fun readData(): IntArray {
-            val result = IntArray(currentSize)
-            buffer.rewind()
-            buffer.get(result)
-            return result
-        }
-
-        /**
-         * Clears the buffer and resets all internal state to its default values.
-         */
-        fun clear() {
-            buffer.clear()
-            currentSizeInternal = 0
-        }
+    @Synchronized
+    fun clear() {
+        buffer.clear()
+        currentSizeInternal = 0
     }
 }
 
