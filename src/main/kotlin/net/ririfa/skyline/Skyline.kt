@@ -11,7 +11,6 @@ import net.ririfa.langman.InitType
 import net.ririfa.langman.LangMan
 import net.ririfa.skyline.config.ConfigManager
 import net.ririfa.skyline.config.KeyBindingManager
-import net.ririfa.skyline.renderer.ChunkCache
 import net.ririfa.skyline.translation.SLMSGProvider
 import net.ririfa.skyline.translation.SkylineMessageKey
 import org.slf4j.Logger
@@ -55,8 +54,8 @@ class Skyline : ClientModInitializer, ModMenuApi {
 	}
 
 	private fun registerEvents() {
-		ClientLifecycleEvents.CLIENT_STARTED.register { ChunkCache.SSBO.create() }
-		ClientLifecycleEvents.CLIENT_STOPPING.register { ChunkCache.SSBO.destroy() }
+		ClientLifecycleEvents.CLIENT_STARTED.register { /*ChunkCache.SSBO.create()*/ }
+		ClientLifecycleEvents.CLIENT_STOPPING.register { /*hunkCache.SSBO.destroy()*/ }
 	}
 
 	override fun getModConfigScreenFactory(): ConfigScreenFactory<*> {

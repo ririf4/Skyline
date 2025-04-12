@@ -59,7 +59,7 @@ object ConfigManager {
 			)
 				.setDefaultValue(ChunkSize.of(config.chunkSizeX, config.chunkSizeZ))
 				.setEnumNameProvider { (it as ChunkSize).displayName }
-				.setSaveConsumer { config = config.copy(chunkSizeX = it.size[0], chunkSizeZ = it.size[1]) }
+				.setSaveConsumer { config = config.copy(chunkSizeX = it.size.x, chunkSizeZ = it.size.z) }
 				.setTooltip(provider.getMessage(SkylineMessageKey.Config.Settings.ChunkSizeXZ.Tooltip))
 				.build()
 		)
@@ -93,9 +93,9 @@ object ConfigManager {
 			}
 
 			try {
-				val reader = Files.newBufferedReader(configFile)
-				config = gson.fromJson(reader, Config::class.java)
-				reader.close()
+				Files.newBufferedReader(configFile).use {
+					config = gson.fromJson(it, Config::class.java)
+				}
 			} catch (e: Exception) {
 				e.printStackTrace()
 			}
@@ -113,20 +113,28 @@ object ConfigManager {
 		}
 	}
 
-	enum class ChunkSize(val size: IntArray) {
-		SMALL(intArrayOf(8, 8)),
-		MEDIUM(intArrayOf(16, 16)),
-		LARGE(intArrayOf(32, 32));
+	enum class ChunkSize(val size: Size) {
+		SMALL(Size(16, 16)),
+		SMALL_MEDIUM(Size(32, 32)),
+		MEDIUM(Size(64, 64)),
+		MEDIUM_LARGE(Size(128, 128)),
+		LARGE(Size(256, 256)),
+		HUGE(Size(512, 512));
 
 		companion object {
 			fun of(x: Int, z: Int): ChunkSize {
-				return entries.firstOrNull { it.size[0] == x && it.size[1] == z } ?: MEDIUM
+				return entries.firstOrNull { it.size.x == x && it.size.z == z } ?: MEDIUM
 			}
 		}
 
 		val displayName: Text
-			get() = Text.of("${size[0]}×256×${size[1]}").copy().styled { it.withBold(true) }
+			get() = Text.of("${size.x}×${size.z}").copy().styled { it.withBold(true) }
 	}
+
+	data class Size(
+		val x: Int,
+		val z: Int
+	)
 
 	data class Config(
 		@JvmField
@@ -142,8 +150,6 @@ object ConfigManager {
 		@JvmField
 		val maxChunks: Int = 1024
 	) {
-		fun getCellSize(): Int {
-			return chunkSizeX * chunkSizeZ
-		}
+		fun getChunksPerCell(): Int = (chunkSizeX / 16) * (chunkSizeZ / 16)
 	}
 }

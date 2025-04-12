@@ -13,5 +13,4 @@ class SLMSGProvider : MessageProviderDefault<SLMSGProvider, Text>(Text::class.ja
 		val lang = client.options?.language?.split("_")?.getOrNull(0) ?: "en"
 		return lang
 	}
-
 }

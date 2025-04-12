@@ -2,10 +2,10 @@
 kotlin = "2.1.10"
 loom = "1.10-SNAPSHOT"
 
-minecraft = "1.21.4"
+minecraft = "1.21.5-pre2"
 fabric-loader = "0.16.10"
-fabric-api = "0.118.0+1.21.4"
-fabric-yarn = "1.21.4+build.8"
+fabric-api = "0.118.6+1.21.5"
+fabric-yarn = "1.21.5-pre2+build.2"
 fabric-kotlin = "1.13.1+kotlin.2.1.10"
 cloth = "17.0.144"
 langman = "1.4.3"
